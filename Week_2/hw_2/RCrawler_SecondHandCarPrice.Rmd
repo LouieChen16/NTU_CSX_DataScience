@@ -1,0 +1,24 @@
+---
+title: "hw_2"
+author: "Louie Chen"
+date: "September 23, 2018"
+output: html_document
+---
+
+```{r}
+library(rvest)
+
+page.source <- read_html("https://c.8891.com.tw/Models/mercedes-benz")
+
+type <- html_nodes(page.source, ".brand-list-type")
+price <- html_nodes(page.source, ".brand-list-price")
+
+type_text <- html_text(type)
+price_text <- html_text(price)
+
+df = data.frame(type_text,price_text)
+
+library(knitr)
+library(kableExtra)
+kable(df)
+```

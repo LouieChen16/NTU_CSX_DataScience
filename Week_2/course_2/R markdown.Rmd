@@ -1,0 +1,35 @@
+---
+title: "Airquality sample"
+author: "Louie Chen"
+date: "September 21, 2018"
+output: html_document
+---
+
+This is my first r markdown doc.
+
+### See what datasets are available
+```{r}
+#library(MASS)
+#data()
+```
+
+### Load Data
+```{r}
+library(datasets)
+data(airquality)
+summary(airquality)
+```
+
+### Pair Plot of The Data
+
+```{r}
+pairs(airquality)
+```
+
+### Regression Model
+Online Resource of "lm": http://programmermagazine.github.io/201309/htm/article3.html
+```{r}
+fit <- lm(Ozone ~ Solar.R + Wind + Temp, data = airquality)
+summary(fit)
+```
+

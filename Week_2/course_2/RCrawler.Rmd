@@ -1,0 +1,34 @@
+---
+title: "RCrawler"
+author: "Louie Chen"
+date: "September 21, 2018"
+output: html_document
+---
+
+online soure:http://mansunkuo.github.io/RCrawler101-201512-2/#(1)
+
+```{r}
+library(httr)
+#httr online source: https://cran.r-project.org/web//packages/httr/vignettes/quickstart.html
+
+url <- "http://ecshweb.pchome.com.tw/search/v3.3/all/results?q=sony&page=1&sort=rnk/dc"
+
+res = GET(url)
+res_json = content(res)
+#res_json$prods代表只要res_json中$prods的資料
+raw = data.frame(do.call(rbind,res_json$prod))
+#do.call() online resource: https://stackoverflow.com/questions/35074200/why-rbind-and-do-callrbind-return-a-different-result
+```
+
+```{r}
+library(knitr)
+library(kableExtra)
+kable(raw)
+#kable online resource: https://www.rdocumentation.org/packages/knitr/versions/1.20/topics/kable
+
+```
+
+
+
+
+

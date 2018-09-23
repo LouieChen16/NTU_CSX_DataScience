@@ -1,0 +1,28 @@
+---
+title: "hw_2"
+author: "Louie Chen"
+date: "September 23, 2018"
+output: html_document
+---
+
+```{r}
+library(rvest)
+
+page.source <- read_html("https://www.tripadvisor.com.tw/Hotels-g293913-Taipei-Hotels.html")
+
+hotel_name <- html_nodes(page.source, ".prominent")
+provide_web <- html_nodes(page.source, ".provider")
+price <- html_nodes(page.source, ".price-wrap")
+review_count <- html_nodes(page.source, ".review_count")
+
+Hotel <- html_text(hotel_name)
+Provider <- html_text(provide_web)
+Price <- html_text(price)
+Review_Count <- html_text(review_count)
+
+df = data.frame(Hotel,Price,Provider,Review_Count)
+library(knitr)
+library(kableExtra)
+kable(df)
+
+```
