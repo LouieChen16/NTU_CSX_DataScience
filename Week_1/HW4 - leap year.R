@@ -1,14 +1,10 @@
-readinteger <- function()
-{ 
-  n <- readline(prompt="Enter an integer: ")
-  return(as.integer(n))
-}
+n <- readline(prompt="Enter an integer: ")
+a <- as.integer(n)
 
-print(readinteger())
-
-if (readinteger() %% 100 != 0 && readinteger() %% 4 == 0 || readinteger() %% 400 == 0){
-  cat('??????')
-}
-else{
-  cat('?????????')
+if (a %% 100 != 0 && a %% 4 == 0){
+  cat('是閏年')
+} else if (a %% 3200 != 0 && a %% 400 == 0){
+  cat('是閏年')
+} else{
+  cat('是平年')
 }
