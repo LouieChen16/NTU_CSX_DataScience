@@ -1,0 +1,114 @@
+---
+title: 'HW_3'
+author: "Louie Chen"
+date: "September 30, 2018"
+output: html_document
+---
+
+Tutorial to ggplots and other basic R knowledge: https://yijutseng.github.io/DataScienceRBook/vis.html#section-8.1
+
+```{r}
+
+#Import data
+
+##Method 1
+'library(gdata)                   # load gdata package 
+help(read.xls)                  # documentation 
+mydata = read.csv("D:/NTU_DataScience (R)/NTU_CSX_DataScience/Week_3/Course/metro-bike-share-trip-data.csv")
+mydata'
+
+##Method 2
+library(readr)
+metro_bike_share_trip_data <- read_csv("D:/NTU_DataScience (R)/NTU_CSX_DataScience/Week_3/Course/metro-bike-share-trip-data.csv")
+'View(metro_bike_share_trip_data)'
+library(ggplot2)
+```
+
+Duration distribution - bar chart
+```{r}
+ggplot(data = metro_bike_share_trip_data, aes(x = Duration)) +
+geom_bar(fill = "lightblue", colour = "black")
+
+```
+
+Start Station Location Distribution - scatter chart
+```{r}
+'# remove NA in the sixth column in data
+na.omit(metro_bike_share_trip_data[6])'
+'# means first row and sixth column in data
+metro_bike_share_trip_data[1,6]'
+
+ggplot(data = metro_bike_share_trip_data, mapping = aes(x = Starting_Station_Longitude, y = Starting_Station_Latitude)) +
+    geom_point(alpha = 0.005, color = "blue") + scale_y_continuous(limits = c(33.975, 34.07)) + scale_x_continuous(limits = c(-118.5, -118.2)) +   labs(title="Scatter Chart", 
+           subtitle="Start Station Location Distribution", 
+           caption="Source: Kaggle")
+
+```
+
+start station id distribution - Bar Chart
+```{r}
+theme_set(theme_bw())
+ggplot(data = metro_bike_share_trip_data, aes(x = Starting_Station_ID)) +
+geom_bar(width = 0.5, fill = "red", colour = "tomato2") + 
+  scale_x_continuous(limits = c(3000, 3090)) + 
+  labs(title="Bar Chart", 
+           subtitle="Start Station Distribution", 
+           caption="Source: Kaggle") + 
+  theme(axis.text.x = element_text(angle=65, vjust=0.6))
+```
+
+Online source to only output certain range on plot: https://stackoverflow.com/questions/3606697/how-to-set-limits-for-axes-in-ggplot2-r-plots
+
+start station id distribution - Bar Chart(Sorted)
+```{r}
+library(plyr)
+count_star_sta_id <- count(metro_bike_share_trip_data, vars = "Starting_Station_ID")
+
+count_star_sta_id <- count_star_sta_id[order(count_star_sta_id$freq), ]
+count_star_sta_id <- na.omit(count_star_sta_id)
+
+count_star_sta_id$Starting_Station_ID <- factor(count_star_sta_id$Starting_Station_ID, levels = count_star_sta_id$Starting_Station_ID)
+
+ggplot(data = count_star_sta_id, aes(x = Starting_Station_ID, y = freq)) +
+geom_bar(stat="identity", width = 0.5, fill = "red", colour = "tomato2") + 
+  labs(title="Bar Chart (Sorted)", 
+           subtitle="Start Station Distribution", 
+           caption="Source: Kaggle") + 
+  theme(axis.text.x = element_text(angle=65, vjust=0.6))
+```
+
+start station hot spot - Diverging Bars chart
+```{r}
+theme_set(theme_bw())  
+
+# Data Prep
+library(plyr)
+count_star_sta_id <- count(metro_bike_share_trip_data, vars = "Starting_Station_ID")
+
+count_star_sta_id <- na.omit(count_star_sta_id)
+
+count_star_sta_id$freq <- round((count_star_sta_id$freq - mean(count_star_sta_id$freq))/sd(count_star_sta_id$freq), 2)  # compute normalized freq
+
+count_star_sta_id <- count_star_sta_id[order(count_star_sta_id$freq), ]  # sort
+
+type <- ifelse(count_star_sta_id$freq < 0, "below", "above")  # above / below avg flag
+
+count_star_sta_id$Starting_Station_ID <- factor(count_star_sta_id$Starting_Station_ID, levels = count_star_sta_id$Starting_Station_ID)  # convert to factor to retain sorted order in plot.
+
+# Diverging Barcharts
+ggplot(count_star_sta_id, aes(x=Starting_Station_ID, y=freq, label=freq)) + 
+  geom_bar(stat="identity", aes(fill = type), width=.5)  +
+  scale_fill_manual(name="freq", 
+                    labels = c("Above Average", "Below Average"), 
+                    values = c("above"="#00ba38", "below"="#f8766d")) + 
+  labs(subtitle="Start Station Hot Spot", 
+       title= "Diverging Bars") + 
+  coord_flip()
+```
+
+# Other things can be analyzed:
+start time month growth - line chart
+start time 點鐘 distribution - histogram
+Passholder_Type duration histogram
+starting station id, ending station id - slope chart
+ 

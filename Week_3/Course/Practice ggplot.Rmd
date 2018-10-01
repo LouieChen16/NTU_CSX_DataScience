@@ -1,0 +1,80 @@
+---
+title: "Practice ggplot"
+author: "Louie Chen"
+date: "September 27, 2018"
+output: html_document
+---
+
+good resource: https://yijutseng.github.io/DataScienceRBook/vis.html#section-8.1
+
+Examples of plots: http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html
+
+```{r}
+#view all datasets in R
+'library(MASS)
+data()'
+
+#Install ggplot2
+'install.packages("ggplot2")'
+
+#load ggplot2
+library(ggplot2)
+airquality
+```
+
+
+```{r}
+#å®è®æ¸-é¡å¥å:bar chart
+ggplot(data = airquality, aes(x = Temp)) +
+geom_bar(fill = "lightblue", colour = "black")
+```
+
+```{r}
+#å®è®æ¸-é£çºå:histogram
+ggplot(data = airquality, aes(x = Temp)) +
+geom_histogram()
+
+```
+
+```{r}
+#éè®æ¸-é£çºvsé£çº:point chart
+ggplot(data = airquality, aes(x = Day, y=Temp)) +
+geom_point(alpha = 0.2,color = "red")
+#alpha代表透明度，可以看出有沒有點覆蓋在一起
+```
+
+```{r}
+#éè®æ¸-é£çºvsé¢æ£:box plot
+ggplot(data = airquality, aes(x=Month, y=Temp)) +
+geom_boxplot()
+```
+
+```{r}
+#åçè³æåå¼: ä»¥caratèpriceä½çºå©è»¸ç«åãä¸¦ä»¥cutä¾ååé¡è²
+myplot <- ggplot(diamonds, aes(carat, price, colour = cut))
+
+#åçç¾ç·¨
+myplot <- myplot + layer(
+  geom = "point",
+  stat = "identity",
+  position = "identity",
+  params = list(na.rm = FALSE)
+)
+
+# Print myplot
+myplot
+```
+
+```{r}
+#折線圖
+ggplot(diamonds, aes(carat, price, colour = cut)) +
+  geom_line()
+```
+
+```{r}
+# 把資料以cut區分，並將每組資料化成折線圖
+ggplot(diamonds, aes(carat, price)) +
+  geom_line() +
+  facet_wrap(~ cut)
+```
+
