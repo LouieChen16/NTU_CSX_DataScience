@@ -1,7 +1,7 @@
 # NTU_CSX_DataScience
 
 ## Progress
-The third week progress is: Import data and draw plots.
+The 4th week progress is: Import data or use existing data, do data cleanning, preprocessing and then draw a word cloud.
 
 ## Course Practice
 * Using R Crawler to download information on PTT
