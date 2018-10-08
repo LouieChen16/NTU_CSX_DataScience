@@ -6,11 +6,12 @@ output: html_document
 ---
 
 ##Loading Library and files
+https://rstudio-pubs-static.s3.amazonaws.com/265713_cbef910aee7642dc8b62996e38d2825d.html
+
+Solve Chinese problem: https://psmethods.postach.io/post/ru-he-geng-gai-rde-yu-she-yu-xi
+
+Cleanning data, online source: http://www.sthda.com/english/wiki/text-mining-and-word-cloud-fundamentals-in-r-5-simple-steps-you-should-know
 ```{r}
-#https://rstudio-pubs-static.s3.amazonaws.com/265713_cbef910aee7642dc8b62996e38d2825d.html
-
-#Solve Chinese problem: https://psmethods.postach.io/post/ru-he-geng-gai-rde-yu-she-yu-xi
-
 #Set Language as traditional Chinese
 Sys.setlocale(category = "LC_ALL", locale = "cht")
 
@@ -23,13 +24,12 @@ library(jiebaRD)    # install.packages("jiebaRD")
 library(jiebaR)     # install.packages("jiebaR") 中文文字斷詞
 
 #Read all txt files
-'filenames <- list.files(getwd(), pattern="*.txt")
-files <- lapply(filenames, readLines)'
+#filenames <- list.files(getwd(), pattern="*.txt")
+#files <- lapply(filenames, readLines)
 
 file <- readLines("D:/NTU_DataScience (R)/NTU_CSX_DataScience/Week_4/HW/Chinese_downloaded_txt/Chiang's Dairy.txt") 
 #file
 
-#Cleanning data, online source: http://www.sthda.com/english/wiki/text-mining-and-word-cloud-fundamentals-in-r-5-simple-steps-you-should-know
 docs <- Corpus(VectorSource(file))
 ```
 
@@ -82,9 +82,10 @@ docs
 ```
 
 ##Cutter
+Cutter online source: https://www.jianshu.com/p/260c20c7e334
 ```{r}
 mixseg = worker()
-#Cutter online source: https://www.jianshu.com/p/260c20c7e334
+
 new_user_word(mixseg,c("中國", "中華", "司令", "中央", "對手", "對華", "不可", "不能", "不敵", "不如", "不料", "日本", "本軍", "根本"))
 #segment(file,mixseg) 
 
