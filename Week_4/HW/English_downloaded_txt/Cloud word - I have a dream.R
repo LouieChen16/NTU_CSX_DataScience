@@ -1,0 +1,41 @@
+#https://rstudio-pubs-static.s3.amazonaws.com/265713_cbef910aee7642dc8b62996e38d2825d.html
+
+rm(list=ls(all.names = TRUE))
+library(NLP)        # install.packages("NLP")
+library(tm)         # install.packages("tm")
+library(RColorBrewer)
+library(wordcloud)  #install.packages("wordcloud")
+
+filenames <- list.files(getwd(), pattern="*.txt")
+files <- lapply(filenames, readLines)
+docs <- Corpus(VectorSource(files))
+docs <- tm_map(docs, removePunctuation)  #remove space
+docs <- tm_map(docs, tolower)   #change every alphabet to lower case
+docs <- tm_map(docs, removeWords, stopwords("english"))  #remove some common words in English
+docs <- tm_map(docs, stripWhitespace)
+docs <- tm_map(docs, PlainTextDocument)
+docs
+
+#Get preprocessed data into term matrix
+dtm <- DocumentTermMatrix(docs)   
+dtm 
+
+#View first two docs, first 20 words
+#inspect(dtm[1:2, 1:20])
+
+#Save as CSV file
+'m <- as.matrix(dtm)   
+dim(m)
+write.csv(m, file="DocumentTermMatrix.csv") '
+
+freq <- colSums(as.matrix(dtm))   
+freq
+
+set.seed(142) 
+wordcloud(names(freq), freq,
+          scale=c(5,0.1),min.freq=5,max.words=150,
+          random.order=TRUE, random.color=FALSE, 
+          rot.per=.1, colors=brewer.pal(8, "Dark2"),
+          ordered.colors=FALSE,use.r.layout=FALSE,
+          fixed.asp=TRUE)
+

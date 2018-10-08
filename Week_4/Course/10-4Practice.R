@@ -1,0 +1,54 @@
+#https://pecu.gitbooks.io/-r/content/zi-liao-ke-xue-yu-ji-qi-xue-xi.html
+
+#install.packages("tmcn")
+source('D:/NTU_DataScience (R)/NTU_CSX_DataScience/Week_4/Course/pttTestFunction.R')
+
+#if(!file.exists("10.txt")) {
+id = c(1:2)
+URL = paste0("https://www.ptt.cc/bbs/NTU/index", id, ".html")
+filename = paste0(id, ".txt")
+pttTestFunction(URL[1], filename[1])
+mapply(pttTestFunction, URL = URL, filename = filename)
+#} else {
+#  print("No")
+#}
+
+
+rm(list=ls(all.names = TRUE))
+library(NLP)        # install.packages("NLP")
+library(tm)         # install.packages("tm")
+library(jiebaRD)    # install.packages("jiebaRD")
+library(jiebaR)     # install.packages("jiebaR") 中文文字斷詞
+library(RColorBrewer)
+library(wordcloud)  #install.packages("wordcloud")
+
+filenames <- list.files(getwd(), pattern="*.txt")
+files <- lapply(filenames, readLines)
+docs <- Corpus(VectorSource(files))
+#移除可能有問題的符號
+toSpace <- content_transformer(function(x, pattern) {
+  return (gsub(pattern, " ", x))
+}
+)
+docs <- tm_map(docs, toSpace, "※")
+docs <- tm_map(docs, removePunctuation)
+docs
+
+mixseg = worker()
+jieba_tokenizer=function(d){
+  unlist(segment(d[[1]],mixseg))
+}
+seg = lapply(docs, jieba_tokenizer)
+freqFrame = as.data.frame(table(unlist(seg)))
+freqFrame = freqFrame[order(freqFrame$Freq,decreasing=TRUE), ]
+library(knitr)
+kable(head(freqFrame, 10), format = "markdown")
+
+par(family=("Heiti TC Light"))
+wordcloud(freqFrame$Var1,freqFrame$Freq,
+          scale=c(5,0.1),min.freq=50,max.words=150,
+          random.order=TRUE, random.color=FALSE, 
+          rot.per=.1, colors=brewer.pal(8, "Dark2"),
+          ordered.colors=FALSE,use.r.layout=FALSE,
+          fixed.asp=TRUE)
+
