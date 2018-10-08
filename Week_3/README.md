@@ -1,15 +1,15 @@
 # NTU_CSX_DataScience
 
 ## Progress
-The second week progress is: crawler and R markdown.
+The third week progress is: Import data and draw plots.
 
 ## Course Practice
-* R markdown
-* Crawler - Yahoo! (Using rvest)
-* Crawler - Tutorial (Using rvest)
-* Crawler - Pchome (Using httr)
+* Import data online
+* Learn to use ggplot2 to draw various kinds of plots
 
 ## Homework
-* Crawler - Taipei Hotel
-* Crawler - Second Car Price and Type of Mercedes-Benz
-* OOXX Game
+* Download data from Kaggle
+* Duration distribution - bar chart
+* Start station location distribution - scatter chart
+* Start station id distribution - Bar chart
+* Start station hot spot - Diverging bars chart
