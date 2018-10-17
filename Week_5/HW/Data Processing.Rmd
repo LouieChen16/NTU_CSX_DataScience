@@ -1,3 +1,15 @@
+---
+title: "HW5"
+author: "Louie Chen"
+date: "October 18, 2018"
+output: html_document
+---
+##研究問題與動機
+目前已經知道許多媒體在報導政治人物或政治事件時會透過自己主觀的想法將報導內容偏向自己支持的一方，但是在比較沒有政治色彩的其他人物報導上會不會有這種現象呢?
+Tesla CEO: Elon Musk是一個企業人士中較為一體兩面的人，優點缺點鮮明，因此想要捧他或想要黑他都很可以發揮，因此我挑選這個人作為研究題材。希望透過這個人看看每個媒體的報導的著重點是否受其立場影響。
+
+##Load Library
+```{r}
 library(NLP)
 library(tm)
 library(stats)
@@ -12,18 +24,24 @@ library(Matrix)
 library(tidytext)
 library(wordcloud)
 library(ggplot2)
+```
 
+##Data Preprocessing
+```{r}
 #Set Language as traditional Chinese
 Sys.setlocale(category = "LC_ALL", locale = "cht")
 
 #Load Data
 rawData = readtext("*.txt")
 docs = Corpus(VectorSource(rawData$text))
-# data cleaning
+```
+
+## data cleaning
+```{r}
 toSpace <- content_transformer(function(x, pattern) {
   return (gsub(pattern, " ", x))
 })
-##有一些已經去除的字在後面還是持續出現，不知為何
+##困難：有一些已經去除的字在後面還是持續出現，不知為何
 docs <- tm_map(docs, removePunctuation)
 docs <- tm_map(docs, removeNumbers)
 docs <- tm_map(docs, stripWhitespace)
@@ -32,14 +50,6 @@ docs <- tm_map(docs, toSpace, "人人網")
 docs <- tm_map(docs, toSpace, "開心網")
 docs <- tm_map(docs, toSpace, "微博")
 docs <- tm_map(docs, toSpace, "豆瓣")
-#docs <- tm_map(docs, toSpace, "Facebook")
-#docs <- tm_map(docs, toSpace, "Messenger")
-#docs <- tm_map(docs, toSpace, "Twitter")
-#docs <- tm_map(docs, toSpace, "Plurk")
-#docs <- tm_map(docs, toSpace, "QQ")
-#docs <- tm_map(docs, toSpace, "Google+")
-#docs <- tm_map(docs, toSpace, "LinkedIn")
-#docs <- tm_map(docs, toSpace, "WhatsApp")
 docs <- tm_map(docs, toSpace, "複製鏈接")
 docs <- tm_map(docs, toSpace, "這是外部鏈接，瀏覽器將打開另一個窗口")
 docs <- tm_map(docs, toSpace, "大紀元")
@@ -122,25 +132,29 @@ docs <- tm_map(docs, toSpace, "將")
 docs <- tm_map(docs, toSpace, "些")
 docs <- tm_map(docs, toSpace, "還")
 
-##這裡已經把英文去除，隨然在詞頻矩陣已看不到英文，但在最後Output的檔案中還是有英文
+##困難：這裡已經把英文去除，隨然在詞頻矩陣已看不到英文，但在最後Output的檔案中還是有英文
 docs <- tm_map(docs, toSpace, "[a-zA-Z]")
 
 # words cut
-##原本想把斷詞都存在CSV檔，但是存入後用Excel打開都變成亂碼，所以放棄這樣做
+##困難：原本想把斷詞都存在CSV檔，但是存入後用Excel打開都變成亂碼，所以放棄這樣做
 #keywords = read.csv("keywords.csv")
 mixseg = worker()
 #keys = as.matrix(keywords)
 #new_user_word(mixseg, keys)
-##這裡加了自訂的斷詞，但是有些字還是沒有如預期的那樣斷整齊
-new_user_word(mixseg, c("公布", "宣布", "發布", "特斯拉", "伊隆", "馬斯克", "降低", "相互", "互聯網", "互動", "中國", "獵鷹重型", "私有化"))
+
+##困難：這裡加了自訂的斷詞，但是有些字還是沒有如預期的那樣斷整齊
+new_user_word(mixseg, c("私有化", "公布", "宣布", "發布", "特斯拉", "伊隆", "馬斯克", "降低", "相互", "互聯網", "互動", "中國", "獵鷹重型"))
 
 jieba_tokenizer = function(d){
   unlist(segment(d[[1]], mixseg))
 }
 seg = lapply(docs, jieba_tokenizer)
+```
 
+##資料整理、視覺化
+```{r}
 #詞頻矩陣(整合)
-##有出現一些原本沒有在文本中的字，例如：慎、丰，不知為何?
+##困難：有出現一些原本沒有在文本中的字，例如：慎、丰，不知為何?
 freqFrame = as.data.frame(table(unlist(seg)))
 freqFrame = freqFrame[order(freqFrame$Freq,decreasing=TRUE), ]
 library(knitr)
@@ -213,8 +227,10 @@ d.corpus <- Corpus(VectorSource(seg))
 tdm <- TermDocumentMatrix(d.corpus)
 tf <- as.matrix(tdm)
 DF <- tidy(tf)
+```
 
-# tf-idf computation
+## tf-idf computation
+```{r}
 N = tdm$ncol
 tf <- apply(tdm, 2, sum)
 idfCal <- function(word_doc)
@@ -235,7 +251,20 @@ for(x in 1:nrow(tdm))
 findZeroId = as.matrix(apply(doc.tfidf, 1, sum))
 tfidfnn = doc.tfidf[-which(findZeroId == 0),]
 
+```
 
-#Outout File
+##Outout File
+```{r}
 write.table(tfidfnn, 'show.txt')
 write.csv(tfidfnn, "show.csv")
+```
+
+##結論
+從結果看來，BBC提到較多人工智慧、霍金、人類等字眼，推測BBC在提到Musk時，著重的角度是在人類科技的進步與推展，因此會與創新科技、其他科學家、站在人類發展角度進行報導，進而再提到Musk這號人物。
+
+Epochtimes在報導Musk則較為偏向介紹他個人為主，以這個人為核心進行報導，因此也會提到他所創辦的其他公司，例如：SpaceX，而不僅限於Tesla。
+
+Inside則對Tesla這間公司較感興趣，因此是從Tesla這間公司的角度切入，再介紹到他們的CEO，並且對於財務與公司營運方面較為感興趣，相較之下比較不是提到技術的演進，因此字詞中較常提到：特斯拉私有化、股東、資金、美元、董事。
+
+Techorange則是站在比較中性世界觀的觀點報導Tesla，再進而提到Musk這位領導者，可以發現他的報導方式並不只圍繞著美國電動車的發展，而會把中國的電動車、網路產業納入討論。
+
