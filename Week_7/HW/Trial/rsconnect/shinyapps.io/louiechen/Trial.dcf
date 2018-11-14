@@ -1,0 +1,12 @@
+name: Trial
+title: Trial
+username:
+account: louiechen
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 551473
+bundleId: 1700286
+url: https://louiechen.shinyapps.io/Trial/
+when: 1542196501.19012
+asMultiple: FALSE
+asStatic: FALSE
