@@ -15,6 +15,19 @@ Elon Musk is a well-known business man around the world, who has been reported a
 
 ## Main Approach
 
+### 1. Get Material
+First I crawler reports from following 4 media writen in Mandarin that report Elon Musk the most.
+
+* [Techorange](https://buzzorange.com/techorange/)
+* [BBC Chinese](https://www.bbc.com/zhongwen/trad)
+* [Epochtime](https://www.epochtimes.com/b5/)
+* [Inside](https://www.inside.com.tw/)
+
+I searched Elon Musk on each media and clawer first 3 pages' report content to do following steps.
+
+### Data Processing
+
+
 
 ## Key Finding
 
