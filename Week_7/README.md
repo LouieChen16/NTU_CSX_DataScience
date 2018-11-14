@@ -25,9 +25,21 @@ First I crawler reports from following 4 media writen in Mandarin that report El
 
 I searched Elon Musk on each media and clawer first 3 pages' report content to do following steps.
 
-### Data Processing
+### 2. Data Processing
 
+Data Cleanning: Get rid of unwanted characters, ex: English characters, digits......
+Cut Word: Cut words using jiebaR.
+Word Frequence Frame: Calculate frequence of very terms and show on frame.
+Hot Word Bar Chart: Show hot words on sorted bar chart.
+TF-IDF Computation: Compute TF-IDF from frequence frame to do following analysis.
 
+### 3. Machine Learning
+
+* PCA: Use PCA to reduce dimension.
+* Kmeans: Use kmeans to cluster data into 4 groups.
+* Predict: Predict source of pasted article by prediction matrix.
+
+![Prediction Matrix](HW/Trial/www/pred_accuracy.jpg)
 
 ## Key Finding
 
