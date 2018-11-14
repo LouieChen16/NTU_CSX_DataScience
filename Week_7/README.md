@@ -9,8 +9,7 @@ The 4th week progress is: Import data or use existing data, do data cleanning, p
 * But since I encountered a huge difficulty to deal with the nonsence characters caused by encoding or something, I have no HTML to show.
 
 ## Homework
-* Drawing word cloud - using "I have a dream" speech text in English
-HTML: https://louiechen16.github.io/NTU_CSX_DataScience/Week_4/HW/English_downloaded_txt/Cloud_word_-_I_have_a_dream.html
-
-* Drawing word cloud - using "Chiang's (蔣中正) Dairy" during world war 2 in Traditional Chinese
-HTML: https://louiechen16.github.io/NTU_CSX_DataScience/Week_4/HW/Chinese_downloaded_txt/Word_cloud-_Chiang_s_Dairy.html
+Keywords from different media of Elon Musk
+* Shiny.io: https://louiechen.shinyapps.io/Trial/
+* However, the deployed Shiny.io can't read my data which is uploaded within the same file. The Shiny can only run on my computer, so I will demo it on class. Will try my best to figure out the reason by the end of this semester.
+* HTML: https://louiechen16.github.io/NTU_CSX_DataScience/Week_7/HW/Trial/Keywords_for_Elon_Musk.html
