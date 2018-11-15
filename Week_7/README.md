@@ -5,6 +5,7 @@ Keywords from different media of Elon Musk
 * Shiny.io: https://louiechen.shinyapps.io/Trial/
 * However, the deployed Shiny.io can't read my data which is uploaded within the same file. The Shiny can only run on my computer, so I will demo it on class. Will try my best to figure out the reason by the end of this semester.
 * HTML: https://louiechen16.github.io/NTU_CSX_DataScience/Week_7/HW/Trial/Keywords_for_Elon_Musk.html
+* PPT: https://drive.google.com/file/d/1_qIhENW2nwurIELUmy0v_iB5-cBRvu17/view?usp=sharing
 
 ## Problem Overview
 ### Purpose
