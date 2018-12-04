@@ -120,6 +120,7 @@ server <- function(input, output) {
     freq_table <- dat[1:input$no.keyword.BBC.in, 2:3]
     
     #Draw Plot
+    library(ggplot2)
     freq_table$Var1 <- factor(freq_table$Var1, levels = freq_table$Var1)
     ggplot(data = freq_table, aes(x = Var1, y = Freq)) +
       geom_bar(stat="identity", width = 0.5, fill = "blue") + 
@@ -135,6 +136,7 @@ server <- function(input, output) {
     freq_table <- dat[1:input$over.in, 2:3]
     
     #Draw Plot
+    library(ggplot2)
     freq_table$Var1 <- factor(freq_table$Var1, levels = freq_table$Var1)
     ggplot(data = freq_table, aes(x = Var1, y = Freq)) +
       geom_bar(stat="identity", width = 0.5, fill = "blue") + 
