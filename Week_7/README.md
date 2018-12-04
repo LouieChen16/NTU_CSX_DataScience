@@ -5,6 +5,7 @@ Keywords from different media of Elon Musk
 * Shiny.io: https://louiechen.shinyapps.io/Trial/
 * However, the deployed Shiny.io can't read my data which is uploaded within the same file. The Shiny can only run on my computer, so I will demo it on class. Will try my best to figure out the reason by the end of this semester.
 * HTML: https://louiechen16.github.io/NTU_CSX_DataScience/Week_7/HW/Trial/Keywords_for_Elon_Musk.html
+* PPT: https://docs.google.com/presentation/d/1HFMZ-dbdvTfuVdFeS0ZmECyabfhucf2lZQ8yUunQ6lg/edit?usp=sharing
 
 ## Problem Overview
 ### Purpose
@@ -42,4 +43,10 @@ TF-IDF Computation: Compute TF-IDF from frequence frame to do following analysis
 ![Prediction Matrix](HW/Trial/www/pred_accuracy.jpg)
 
 ## Key Finding
+Overall speaking, reports from every media share some common features and point-of-views at the same time. However, they sometimes put different emphasis on the topic.
+* BBC Chinese - They mentioned more AI, human, other scientists' name in the same article. It may be explained that BBC Chinese care more about the improvement of technology and the possible benefit to human being when they mention Elon Musk.
+* Epochtime - They put more emphasis on the person hime self, so they usually mention him and then his company: Tesla, SpaceX, Boring Company.
+* Inside - They are more interested in Tesla and then mention their CEO, who is Musk. what's more, they stated more about their financial situation, board members, rather than the technology.
+* Techorange - They are more neutral to report Tesla. However, they also report a lot about electic car's development in China.
 
+Based on the difference of each press, we can distinguish and predict the source of articles. Nevertheless, due to many resemblance, the accuracy is sometimes not that high.
